@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio</title>
+    <style>
+        :root {
+            --primary-orange: #f6821f;
+            --text-dark: #1d1d1d;
+            --bg-light: #ffffff;
+            --bg-cream: #fffaf5;
+            --border-color: #f6821f;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            border: 1px solid var(--primary-orange); /* Main outer border like the site */
+            min-height: 100vh;
+            margin: 10px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-weight: bold;
+            color: var(--primary-orange);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-orange);
+            font-family: monospace;
+            margin-left: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        h1 em {
+            font-family: "Georgia", serif;
+            font-style: italic;
+            color: var(--primary-orange);
+            display: block; /* Forces new line like the site */
+        }
+
+        .subtitle {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Buttons */
+        .cta-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-orange);
+            color: white;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-dark); /* Dark text for contrast */
+            border: 2px solid var(--primary-orange); /* Orange border matches style */
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Content Grid (The "Agentic" vs "Generative" split) */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .grid-item {
+            padding: 60px;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .grid-item:last-child {
+            border-right: none;
+        }
+
+        .tag {
+            display: inline-block;
+            border: 1px solid var(--primary-orange);
+            color: var(--text-dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            background: white;
+            position: relative;
+            top: -30px; /* Overlap effect */
+        }
+
+        .chat-bubble {
+            border: 1px solid var(--primary-orange);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: white;
+            position: relative;
+        }
+        
+        /* Little triangle for speech bubble */
+        .chat-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            right: -6px;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-right: 1px solid var(--primary-orange);
+            border-bottom: 1px solid var(--primary-orange);
+            transform: rotate(-45deg);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .content-grid { grid-template-columns: 1fr; }
+            .grid-item { border-right: none; border-bottom: 1px solid var(--border-color); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">[Icon] YourName</div>
+        <div class="nav-links">
+            <a href="#">npm i portfolio</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>
+            The Developer For <br>
+            <em>Building Products.</em>
+        </h1>
+        <p class="subtitle">
+            Building applications on the web — designed for durable execution, pixel-perfect interfaces, and code that scales up (and down).
+        </p>
+        <div class="cta-container">
+            <a href="#contact" class="btn btn-primary">Get in Touch</a>
+            <a href="#work" class="btn btn-secondary">View Work</a>
+        </div>
+    </section>
+
+    <section class="content-grid">
+        <div class="grid-item">
+            <span class="tag">Experience</span>
+            <div class="chat-bubble">
+                <strong>Current Role</strong><br>
+                Senior Frontend Engineer at TechCorp.
+            </div>
+            <div class="chat-bubble">
+                <strong>Previous</strong><br>
+                Full Stack Developer at StartupInc.
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <span class="tag">Skills</span>
+            <h2>Capabilities</h2>
+            <ul>
+                <li>React & TypeScript Architecture</li>
+                <li>Serverless Backend (Cloudflare/AWS)</li>
+                <li>UI/UX Design Systems</li>
+            </ul>
+            <p>
+                I specialize in building performant web apps that feel instantaneous. From durable backends to reactive frontends.
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>
