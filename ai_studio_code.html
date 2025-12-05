@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pat Ryan Things | Physical AI Solutions</title>
+    
+    <!-- Fonts: Space Grotesk (Headings) and Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js for Interactivity (CDN) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Custom Config for Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#F4F4F5', // Zinc 100
+                            dark: '#18181B',  // Zinc 900
+                            accent: '#FF6B00', // Industrial Orange
+                            accentHover: '#E65A00',
+                            muted: '#A1A1AA', // Zinc 400
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d8; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF6B00; 
+        }
+
+        /* Fade In Animation classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Grid Background Pattern */
+        .bg-grid-pattern {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* Scanline Animation */
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .animate-scanline {
+            animation: scanline 3s linear infinite;
+        }
+
+        /* Pulse Glow */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 107, 0, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(255, 107, 0, 0.6); }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-white text-brand-dark font-sans antialiased selection:bg-brand-accent selection:text-white"
+      x-data="{ 
+          mobileMenuOpen: false,
+          activeTab: 'proto' 
+      }">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <div class="w-3 h-8 bg-brand-accent"></div>
+                    <span class="font-display font-bold text-xl tracking-tight">PAT RYAN THINGS <span class="text-brand-muted font-light">INDUSTRIAL AUTOMATION</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#paradigm" class="text-sm font-medium hover:text-brand-accent transition-colors">The Paradigm</a>
+                    <a href="#tech-stack" class="text-sm font-medium hover:text-brand-accent transition-colors">The Stack</a>
+                    <a href="#solutions" class="text-sm font-medium hover:text-brand-accent transition-colors">Solutions</a>
+                    <a href="#strategy" class="text-sm font-medium hover:text-brand-accent transition-colors">Strategy</a>
+                    <a href="#contact" class="px-5 py-2.5 bg-brand-dark text-white text-sm font-medium rounded-full hover:bg-brand-accent transition-colors">Get Analysis</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-brand-dark hover:text-brand-accent focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div x-show="mobileMenuOpen" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             class="md:hidden bg-white border-b border-gray-100 absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#paradigm" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium hover:bg-gray-50 hover:text-brand-accent rounded-md">The Paradigm</a>
+                <a href="#tech-stack" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium hover:bg-gray-50 hover:text-brand-accent rounded-md">The Stack</a>
+                <a href="#solutions" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium hover:bg-gray-50 hover:text-brand-accent rounded-md">Solutions</a>
+                <a href="#strategy" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium hover:bg-gray-50 hover:text-brand-accent rounded-md">Strategy</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="paradigm" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Dynamic Background Element -->
+        <canvas id="cosmosCanvas" class="absolute top-0 left-0 w-full h-full z-0 opacity-40"></canvas>
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-gradient-to-br from-gray-100 to-orange-50 rounded-full blur-3xl opacity-30 z-0 pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl reveal active">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-light border border-gray-200 text-xs font-semibold uppercase tracking-wider mb-6 text-brand-accent">
+                    <span class="w-2 h-2 rounded-full bg-brand-accent"></span>
+                    Physical AI Revolution
+                </div>
+                <h1 class="font-display text-5xl md:text-7xl font-bold leading-tight mb-8">
+                    From Digital Twins to <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-orange-400">Generative Worlds</span>.
+                </h1>
+                <p class="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl">
+                    Moving beyond static simulation. We leverage the <strong>NVIDIA Cosmos Platform</strong> to build synthetic data engines that predict the future of manufacturing, reducing risk and accelerating fabrication.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#solutions" class="px-8 py-4 bg-brand-accent text-white font-semibold rounded hover:bg-brand-accentHover transition-all shadow-lg shadow-orange-200 text-center">
+                        Explore Opportunities
+                    </a>
+                    <a href="#tech-stack" class="px-8 py-4 bg-white border border-gray-300 text-brand-dark font-semibold rounded hover:bg-gray-50 transition-all text-center">
+                        View The Tech Stack
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Tech Stack (Grid) -->
+    <section id="tech-stack" class="py-24 bg-brand-light relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">The Cosmos Engine</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">The "Generalist-to-Specialist" workflow. We use NVIDIA's open ecosystem to build proprietary value from your fabrication data.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1: Curator -->
+                <div class="bg-white p-8 rounded-xl border border-gray-200 hover:border-brand-accent hover:shadow-xl transition-all duration-300 group reveal">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Curator</h3>
+                    <p class="text-sm font-semibold text-brand-accent mb-4">Data Processing</p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Ingests massive unstructured sensor data (video, thermal) to create tailored datasets.</p>
+                    <div class="pt-4 border-t border-gray-100">
+                        <span class="text-xs text-gray-500 font-mono">Use Case: Failure Analysis Datasets</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Predict -->
+                <div class="bg-white p-8 rounded-xl border border-gray-200 hover:border-brand-accent hover:shadow-xl transition-all duration-300 group reveal delay-100">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Predict</h3>
+                    <p class="text-sm font-semibold text-brand-accent mb-4">Generative Video</p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Generates "multiverse" simulations. Predicts future physical states (thermal, fluid).</p>
+                    <div class="pt-4 border-t border-gray-100">
+                        <span class="text-xs text-gray-500 font-mono">Use Case: Virtual Prototyping</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Transfer -->
+                <div class="bg-white p-8 rounded-xl border border-gray-200 hover:border-brand-accent hover:shadow-xl transition-all duration-300 group reveal delay-200">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Transfer</h3>
+                    <p class="text-sm font-semibold text-brand-accent mb-4">Sim-to-Real</p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Style transfer for simulation. Creates 10,000 variations of lighting/texture for robust training.</p>
+                    <div class="pt-4 border-t border-gray-100">
+                        <span class="text-xs text-gray-500 font-mono">Use Case: Robotic Training</span>
+                    </div>
+                </div>
+
+                <!-- Card 4: Reason -->
+                <div class="bg-white p-8 rounded-xl border border-gray-200 hover:border-brand-accent hover:shadow-xl transition-all duration-300 group reveal delay-300">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Reason</h3>
+                    <p class="text-sm font-semibold text-brand-accent mb-4">The "Brain"</p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Physics-aware VLM. Plans robot actions and explains "why" a part failed inspection.</p>
+                    <div class="pt-4 border-t border-gray-100">
+                        <span class="text-xs text-gray-500 font-mono">Use Case: Automated QA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opportunity Solutions (Interactive Tabs) -->
+    <section id="solutions" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 border-b border-gray-200 reveal">
+                <h2 class="font-display text-3xl md:text-5xl font-bold mb-8">High-Viability Solutions</h2>
+                
+                <!-- Custom Tab Navigation -->
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-8 overflow-x-auto">
+                    <button @click="activeTab = 'proto'" 
+                            :class="activeTab === 'proto' ? 'text-brand-accent border-b-2 border-brand-accent' : 'text-gray-500 hover:text-gray-800'"
+                            class="pb-4 text-lg font-medium whitespace-nowrap transition-colors text-left sm:text-center">
+                        01. Physics-Aware Prototyping
+                    </button>
+                    <button @click="activeTab = 'am'" 
+                            :class="activeTab === 'am' ? 'text-brand-accent border-b-2 border-brand-accent' : 'text-gray-500 hover:text-gray-800'"
+                            class="pb-4 text-lg font-medium whitespace-nowrap transition-colors text-left sm:text-center">
+                        02. Predictive AM Monitoring
+                    </button>
+                    <button @click="activeTab = 'robot'" 
+                            :class="activeTab === 'robot' ? 'text-brand-accent border-b-2 border-brand-accent' : 'text-gray-500 hover:text-gray-800'"
+                            class="pb-4 text-lg font-medium whitespace-nowrap transition-colors text-left sm:text-center">
+                        03. HMLV Robotic Cell
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content Area -->
+            <div class="min-h-[500px] relative">
+                
+                <!-- Solution 1 -->
+                <div x-show="activeTab === 'proto'" 
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-x-4"
+                     x-transition:enter-end="opacity-100 translate-x-0"
+                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wider rounded mb-4">Pre-Certification as a Service</div>
+                        <h3 class="font-display text-3xl font-bold mb-6">X-Ray Vision for Product Physics</h3>
+                        <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                            A virtual lab that moves beyond visual prototyping. We utilize <strong>Cosmos Predict</strong> and specialized physics renderers to run "multiverse" simulations on thermal management and EMI (Electromagnetic Interference).
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <span class="text-brand-accent mr-3">➜</span>
+                                <span class="text-gray-700"><strong>The Problem:</strong> Failing physical EMI/Thermal tests costs weeks and $10k+ per cycle.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-brand-accent mr-3">➜</span>
+                                <span class="text-gray-700"><strong>The Solution:</strong> Generate 1,000 parallel simulations to identify hotspots and noise before tooling.</span>
+                            </li>
+                        </ul>
+                        <div class="p-6 bg-brand-light rounded-lg border-l-4 border-brand-accent">
+                            <h4 class="font-bold text-brand-dark mb-1">Business Model</h4>
+                            <p class="text-sm text-gray-600">High-Value Consulting (DTaaS) for Medical & Electronics firms.</p>
+                        </div>
+                    </div>
+                    <!-- REPLACEMENT CODE: Thermal Multiverse Dashboard -->
+<div class="order-1 lg:order-2 bg-gray-950 rounded-2xl h-80 lg:h-[400px] relative overflow-hidden shadow-2xl border border-gray-800 flex flex-col">
+    
+    <!-- Dashboard Header -->
+    <div class="flex items-center justify-between px-4 py-3 bg-gray-900 border-b border-gray-800 z-20">
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+            <span class="font-mono text-xs text-gray-400 tracking-widest uppercase">Cosmos Predict // Live Inference</span>
+        </div>
+        <div class="font-mono text-xs text-brand-accent">
+            Simulations/Sec: <span class="text-white" x-data="{ count: 842 }" x-init="setInterval(() => count = 800 + Math.floor(Math.random() * 100), 500)" x-text="count">842</span>
+        </div>
+    </div>
+
+    <!-- Multiverse Grid (2x2 Parallel Simulations) -->
+    <div class="flex-1 grid grid-cols-2 grid-rows-2 gap-[1px] bg-gray-800 p-[1px]">
+        
+        <!-- Simulation Node 1: High Load -->
+        <div class="relative bg-gray-900 overflow-hidden group">
+            <!-- Thermal Gradient Animation -->
+            <div class="absolute inset-0 opacity-80 blur-xl mix-blend-screen scale-150 animate-[spin_8s_linear_infinite]">
+                <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-900 via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 right-0 w-2/3 h-2/3 bg-gradient-to-tl from-red-600 via-yellow-500 to-transparent animate-pulse"></div>
+            </div>
+            <!-- Wireframe Overlay -->
+            <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(#4b5563 1px, transparent 1px); background-size: 10px 10px;"></div>
+            <!-- Data Overlay -->
+            <div class="absolute bottom-2 left-2 font-mono text-[10px] text-gray-300 z-10 leading-tight">
+                <span class="text-gray-500">SCENARIO_A</span><br>
+                <span class="text-red-400">CRITICAL: 98°C</span>
+            </div>
+        </div>
+
+        <!-- Simulation Node 2: Optimized Airflow -->
+        <div class="relative bg-gray-900 overflow-hidden group">
+            <div class="absolute inset-0 opacity-60 blur-xl mix-blend-screen scale-150 animate-[spin_12s_linear_infinite_reverse]">
+                <div class="absolute top-10 left-10 w-full h-full bg-gradient-to-r from-blue-600 via-cyan-500 to-transparent"></div>
+                <div class="absolute bottom-10 right-10 w-1/2 h-1/2 bg-gradient-to-t from-green-500 to-transparent"></div>
+            </div>
+            <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(#4b5563 1px, transparent 1px); background-size: 10px 10px;"></div>
+            <div class="absolute bottom-2 left-2 font-mono text-[10px] text-gray-300 z-10 leading-tight">
+                <span class="text-gray-500">SCENARIO_B</span><br>
+                <span class="text-green-400">NOMINAL: 62°C</span>
+            </div>
+        </div>
+
+        <!-- Simulation Node 3: Heatsink Failure -->
+        <div class="relative bg-gray-900 overflow-hidden group">
+            <div class="absolute inset-0 opacity-90 blur-2xl mix-blend-screen scale-125">
+                 <div class="absolute inset-0 bg-red-900/40"></div>
+                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white rounded-full blur-md animate-pulse"></div>
+                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-red-600 rounded-full blur-xl"></div>
+            </div>
+            <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(#4b5563 1px, transparent 1px); background-size: 10px 10px;"></div>
+            <div class="absolute bottom-2 left-2 font-mono text-[10px] text-gray-300 z-10 leading-tight">
+                <span class="text-gray-500">SCENARIO_C</span><br>
+                <span class="text-white bg-red-600 px-1">FAIL: 115°C</span>
+            </div>
+        </div>
+
+        <!-- Simulation Node 4: Liquid Cooling -->
+        <div class="relative bg-gray-900 overflow-hidden group">
+            <div class="absolute inset-0 opacity-70 blur-lg mix-blend-screen">
+                <div class="w-full h-full bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-blue-900 via-blue-500 to-cyan-400 animate-[pulse_4s_ease-in-out_infinite]"></div>
+            </div>
+            <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(#4b5563 1px, transparent 1px); background-size: 10px 10px;"></div>
+            <div class="absolute bottom-2 left-2 font-mono text-[10px] text-gray-300 z-10 leading-tight">
+                <span class="text-gray-500">SCENARIO_D</span><br>
+                <span class="text-blue-300">STABLE: 45°C</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Timeline / Scrub Bar UI -->
+    <div class="h-1 bg-gray-800 w-full relative">
+        <div class="absolute left-0 top-0 bottom-0 bg-brand-accent w-1/3 animate-[width_3s_ease-in-out_infinite]"></div>
+    </div>
+</div>
+                </div>
+
+                <!-- Solution 2 -->
+                <div x-show="activeTab === 'am'" style="display: none;"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-x-4"
+                     x-transition:enter-end="opacity-100 translate-x-0"
+                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wider rounded mb-4">SaaS / IP Licensing</div>
+                        <h3 class="font-display text-3xl font-bold mb-6">Predicting Defects in Metal AM</h3>
+                        <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                            A deployable Physical AI agent for 3D printing. By training <strong>Cosmos Predict</strong> on proprietary sensor data, we create a "Specialist Model" that flags delamination and porosity <em>before</em> they occur.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <span class="text-brand-accent mr-3">➜</span>
+                                <span class="text-gray-700"><strong>The Moat:</strong> A curated "Thermal WFM" dataset derived from real-world fabrication failures.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-brand-accent mr-3">➜</span>
+                                <span class="text-gray-700"><strong>The Value:</strong> Reduces scrap rates in aerospace/medical printing by predicting future thermal states.</span>
+                            </li>
+                        </ul>
+                        <div class="p-6 bg-brand-light rounded-lg border-l-4 border-brand-accent">
+                            <h4 class="font-bold text-brand-dark mb-1">Commercial Viability</h4>
+                            <p class="text-sm text-gray-600">Very High. Solves the #1 blocker for a multi-billion dollar industry.</p>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2 bg-gray-900 rounded-2xl h-80 lg:h-[400px] relative overflow-hidden shadow-2xl border border-gray-800 flex flex-col">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between px-4 py-3 bg-gray-950 border-b border-gray-800 z-20">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></div>
+                                <span class="font-mono text-xs text-gray-400 tracking-widest uppercase">EOS M 290 // LAYER 482</span>
+                            </div>
+                            <div class="font-mono text-xs text-red-400 flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                ANOMALY DETECTED
+                            </div>
+                        </div>
+
+                        <!-- Main Visualization Area -->
+                        <div class="flex-1 relative bg-gray-900 p-4 flex gap-4">
+                            <!-- Left: Thermal Map -->
+                            <div class="flex-1 bg-gray-950 rounded border border-gray-800 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+                                <!-- Simulated Melt Pool Path -->
+                                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                    <path d="M10,10 L90,10 L90,20 L10,20 L10,30 L90,30" fill="none" stroke="#333" stroke-width="0.5" />
+                                    <!-- Active Laser Path -->
+                                    <path d="M10,40 L90,40 L90,50 L50,50" fill="none" stroke="#FF6B00" stroke-width="1" class="drop-shadow-[0_0_3px_rgba(255,107,0,0.8)]">
+                                        <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="4s" repeatCount="indefinite" />
+                                    </path>
+                                    <!-- Hotspot/Defect -->
+                                    <circle cx="50" cy="50" r="3" fill="rgba(255,0,0,0.5)" class="animate-pulse">
+                                        <animate attributeName="r" values="2;4;2" dur="1s" repeatCount="indefinite" />
+                                    </circle>
+                                </svg>
+                                <!-- Laser Head Indicator -->
+                                <div class="absolute w-4 h-4 border-2 border-brand-accent rounded-full -ml-2 -mt-2 shadow-[0_0_10px_#FF6B00]" style="left: 50%; top: 50%;"></div>
+                            </div>
+
+                            <!-- Right: Data Stream -->
+                            <div class="w-32 flex flex-col gap-2">
+                                <div class="bg-gray-950 p-2 rounded border border-gray-800">
+                                    <div class="text-[10px] text-gray-500 uppercase">Melt Pool Temp</div>
+                                    <div class="text-xl font-mono text-white">2,450°C</div>
+                                    <div class="w-full h-1 bg-gray-800 mt-1 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-yellow-500 to-red-500 w-[90%]"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-950 p-2 rounded border border-gray-800">
+                                    <div class="text-[10px] text-gray-500 uppercase">Laser Power</div>
+                                    <div class="text-xl font-mono text-white">380W</div>
+                                    <div class="w-full h-1 bg-gray-800 mt-1 rounded-full overflow-hidden">
+                                        <div class="h-full bg-brand-accent w-[75%]"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-950 p-2 rounded border border-gray-800 flex-1 overflow-hidden relative">
+                                    <div class="text-[10px] text-gray-500 uppercase mb-1">Log</div>
+                                    <div class="font-mono text-[9px] text-green-400 space-y-1 opacity-80">
+                                        <div>> Init Layer 482</div>
+                                        <div>> Gas Flow: OK</div>
+                                        <div>> Recoater: OK</div>
+                                        <div class="text-red-400">> WARN: Spatter</div>
+                                        <div class="text-red-400">> ADJ: Power -5%</div>
+                                        <div>> Resuming...</div>
+                                    </div>
+                                    <div class="absolute bottom-0 left-0 w-full h-8 bg-gradient-to-t from-gray-950 to-transparent"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 3 -->
+                <div x-show="activeTab === 'robot'" style="display: none;"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-x-4"
+                     x-transition:enter-end="opacity-100 translate-x-0"
+                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wider rounded mb-4">Robotics-as-a-Service</div>
+                        <h3 class="font-display text-3xl font-bold mb-6">The HMLV Robotic Cell</h3>
+                        <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                            Solving the "Job Shop" automation crisis. We use <strong>Cosmos Transfer</strong> to generate 10,000 "dirty" simulation variations (smoke, lighting, misalignment) to train robots that work in the real world.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <span class="text-brand-accent mr-3">➜</span>
+                                <span class="text-gray-700"><strong>Sim-to-Real:</strong> Zero-shot transfer allows robots to weld custom parts without reprogramming.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-brand-accent mr-3">➜</span>
+                                <span class="text-gray-700"><strong>Feedback Loop:</strong> Real shop data improves the simulation, creating an unassailable data flywheel.</span>
+                            </li>
+                        </ul>
+                        <div class="p-6 bg-brand-light rounded-lg border-l-4 border-brand-accent">
+                            <h4 class="font-bold text-brand-dark mb-1">Target Market</h4>
+                            <p class="text-sm text-gray-600">SME Fabrication Shops & Custom Manufacturing.</p>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2 bg-gray-900 rounded-2xl h-80 lg:h-[400px] relative overflow-hidden shadow-2xl border border-gray-800 flex flex-col">
+                        <!-- Overlay UI -->
+                        <div class="absolute top-4 left-4 z-20 bg-black/50 backdrop-blur px-3 py-1.5 rounded border border-white/10">
+                            <div class="text-[10px] text-gray-400 uppercase tracking-wider">Training Episode</div>
+                            <div class="text-lg font-mono text-white font-bold" x-data="{ ep: 10402 }" x-init="setInterval(() => ep += 1, 100)" x-text="ep">10402</div>
+                        </div>
+                        
+                        <div class="absolute top-4 right-4 z-20 flex flex-col gap-2 items-end">
+                            <div class="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-[10px] text-green-400 font-mono">Success Rate: 99.4%</div>
+                            <div class="px-2 py-1 bg-blue-500/20 border border-blue-500/30 rounded text-[10px] text-blue-400 font-mono">Sim Speed: 1000x</div>
+                        </div>
+
+                        <!-- 3D Viewport Simulation -->
+                        <div class="flex-1 relative perspective-1000 overflow-hidden flex items-center justify-center bg-gradient-to-b from-gray-800 to-gray-900">
+                            <!-- Grid Floor -->
+                            <div class="absolute bottom-0 w-[200%] h-[200%] bg-grid-pattern opacity-30 transform rotate-x-60 translate-y-1/2 origin-bottom animate-[spin_20s_linear_infinite]"></div>
+                            
+                            <!-- Robot Arm (CSS Shapes) -->
+                            <div class="relative w-4 h-32 bg-gray-600 rounded-full origin-bottom transform -rotate-12 shadow-xl z-10 flex flex-col justify-end items-center group">
+                                <!-- Base -->
+                                <div class="absolute bottom-0 w-16 h-4 bg-gray-700 rounded-full translate-y-2"></div>
+                                <!-- Joint 1 -->
+                                <div class="w-6 h-6 bg-brand-accent rounded-full absolute top-0 -mt-3 shadow-[0_0_15px_rgba(255,107,0,0.5)]"></div>
+                                <!-- Arm Segment 2 -->
+                                <div class="absolute top-0 w-3 h-24 bg-gray-500 origin-bottom transform rotate-45 -translate-y-20 animate-[pulse_3s_ease-in-out_infinite]">
+                                    <!-- Joint 2 -->
+                                    <div class="w-5 h-5 bg-gray-300 rounded-full absolute top-0 -mt-2 -ml-1"></div>
+                                    <!-- End Effector -->
+                                    <div class="absolute top-0 w-8 h-8 border-2 border-brand-accent rounded-full -mt-8 -ml-2.5 animate-[spin_1s_linear_infinite]"></div>
+                                </div>
+                            </div>
+
+                            <!-- Floating Particles (Dust/Smoke) -->
+                            <div class="absolute inset-0 pointer-events-none">
+                                <div class="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full opacity-50 animate-[ping_3s_linear_infinite]"></div>
+                                <div class="absolute top-3/4 right-1/3 w-1 h-1 bg-white rounded-full opacity-30 animate-[ping_2s_linear_infinite_delay-1000]"></div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Controls -->
+                        <div class="h-12 bg-gray-950 border-t border-gray-800 flex items-center px-4 gap-4">
+                            <div class="text-[10px] text-gray-500 uppercase">Domain Randomization:</div>
+                            <div class="flex gap-2">
+                                <span class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span>
+                                <span class="text-[10px] text-gray-400">Lighting</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="w-2 h-2 rounded-full bg-gray-500 animate-pulse"></span>
+                                <span class="text-[10px] text-gray-400">Texture</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                                <span class="text-[10px] text-gray-400">Physics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy / Roadmap -->
+    <section id="strategy" class="py-24 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 reveal">
+                <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Phased Implementation</h2>
+                <p class="text-gray-600 max-w-2xl">A roadmap designed to manage technical risk while building proprietary IP.</p>
+            </div>
+
+            <div class="relative border-l-2 border-brand-accent/30 ml-4 md:ml-0 md:pl-0 space-y-12">
+                
+                <!-- Phase 1 -->
+                <div class="relative md:grid md:grid-cols-5 md:gap-10 items-center reveal">
+                    <div class="md:col-span-1 flex flex-row md:flex-col items-center md:items-end mb-4 md:mb-0">
+                        <span class="text-brand-accent font-display font-bold text-xl md:text-2xl mr-4 md:mr-0">Phase 1</span>
+                        <span class="text-xs text-gray-500 uppercase tracking-wide">Months 1-9</span>
+                    </div>
+                    <div class="absolute -left-[21px] md:static md:col-span-1 flex justify-center">
+                        <div class="w-10 h-10 bg-white border-4 border-brand-accent rounded-full z-10"></div>
+                    </div>
+                    <div class="md:col-span-3 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h4 class="font-bold text-lg mb-2">Internal R&D & Case Study</h4>
+                        <p class="text-gray-600 text-sm">Build the Metal AM solution internally. No revenue focus yet—focus on creating the "Thermal WFM" dataset and IP generation.</p>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="relative md:grid md:grid-cols-5 md:gap-10 items-center reveal delay-100">
+                    <div class="md:col-span-1 flex flex-row md:flex-col items-center md:items-end mb-4 md:mb-0">
+                        <span class="text-brand-accent font-display font-bold text-xl md:text-2xl mr-4 md:mr-0">Phase 2</span>
+                        <span class="text-xs text-gray-500 uppercase tracking-wide">Months 9-18</span>
+                    </div>
+                    <div class="absolute -left-[21px] md:static md:col-span-1 flex justify-center">
+                        <div class="w-10 h-10 bg-white border-4 border-brand-accent rounded-full z-10"></div>
+                    </div>
+                    <div class="md:col-span-3 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h4 class="font-bold text-lg mb-2">Pilot Service & Partnerships</h4>
+                        <p class="text-gray-600 text-sm">Launch the "Physics-Aware Prototyping" consulting service. Use revenue to fund R&D. Join NVIDIA Partner Network.</p>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="relative md:grid md:grid-cols-5 md:gap-10 items-center reveal delay-200">
+                    <div class="md:col-span-1 flex flex-row md:flex-col items-center md:items-end mb-4 md:mb-0">
+                        <span class="text-brand-accent font-display font-bold text-xl md:text-2xl mr-4 md:mr-0">Phase 3</span>
+                        <span class="text-xs text-gray-500 uppercase tracking-wide">Months 18+</span>
+                    </div>
+                    <div class="absolute -left-[21px] md:static md:col-span-1 flex justify-center">
+                        <div class="w-10 h-10 bg-white border-4 border-brand-accent rounded-full z-10"></div>
+                    </div>
+                    <div class="md:col-span-3 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h4 class="font-bold text-lg mb-2">Scaled Product (Series A)</h4>
+                        <p class="text-gray-600 text-sm">Deploy the "HMLV Robotic Cell" as a product. Leverage the full Sim-to-Real flywheel. This is the scalable venture asset.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-brand-dark text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="font-display text-3xl font-bold mb-6">Invest in the <span class="text-brand-accent">New Industrial Revolution</span>.</h2>
+                    <p class="text-gray-400 max-w-md leading-relaxed mb-8">
+                        We are not an "AI company." We are building the operating system for the agile factory of the future, powered by NVIDIA Cosmos.
+                    </p>
+                    <button class="px-6 py-3 bg-brand-accent text-white font-semibold rounded hover:bg-brand-accentHover transition-colors">
+                        Request Full Investor Deck
+                    </button>
+                </div>
+                <div class="flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-white">Analysis Sources</h3>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• NVIDIA Cosmos Developer Documentation</li>
+                            <li>• 2025 Digital Twin Market Report (Grand View)</li>
+                            <li>• NSF Research on Metal AM Thermal Simulation</li>
+                            <li>• NVIDIA Isaac Sim & Omniverse Whitepapers</li>
+                        </ul>
+                    </div>
+                    <div class="mt-12 text-xs text-gray-500">
+                        &copy; 2025 Pat Ryan Things LLC. All rights reserved.<br>
+                        This is a strategic analysis based on current technological capabilities.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Reveal Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 150;
+
+                reveals.forEach((reveal) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Trigger once on load
+        });
+    </script>
+    <!-- Cosmos Background Animation -->
+    <script>
+        const canvas = document.getElementById('cosmosCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(200, 200, 200, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            resize();
+            for (let i = 0; i < 50; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+
+                // Connect particles
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.strokeStyle = `rgba(200, 200, 200, ${0.1 - distance/1500})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        init();
+        animate();
+    </script>
+</body>
+</html>
