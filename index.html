@@ -1,214 +1,398 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pat Ryan Things | Portfolio</title>
-    
-    <!-- Fonts: Space Grotesk (Headings) and Inter (Body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Alpine.js for Interactivity (CDN) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pat Ryan | Strategic Design + Digital Delivery</title>
+  <meta name="description" content="Pat Ryan helps brands shape physical spaces and digital platforms through industrial design, branding, digital twins, and execution strategy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #151515;
+      --paper: #f5f3ef;
+      --muted: #6f6a63;
+      --line: #d6d0c7;
+      --accent: #ba4b2f;
+      --panel: #fdfbf8;
+      --charcoal: #1e1e1d;
+    }
 
-    <!-- Custom Config for Colors -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            light: '#F4F4F5', // Zinc 100
-                            dark: '#18181B',  // Zinc 900
-                            accent: '#FF6B00', // Industrial Orange
-                            accentHover: '#E65A00',
-                            muted: '#A1A1AA', // Zinc 400
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.5;
+    }
 
-    <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #d4d4d8; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #FF6B00; 
-        }
+    .container {
+      width: min(1180px, 92vw);
+      margin: 0 auto;
+    }
 
-        /* Fade In Animation classes */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(245, 243, 239, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-wrap {
+      min-height: 78px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-family: Manrope, sans-serif;
+      letter-spacing: 0.08em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .menu {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .menu a {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    .menu a:hover,
+    .menu a:focus-visible { color: var(--accent); }
+
+    .hero {
+      padding: 5rem 0 3.2rem;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 90% 10%, rgba(186, 75, 47, 0.14), transparent 30%),
+        radial-gradient(circle at 15% 20%, rgba(0, 0, 0, 0.06), transparent 26%);
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    h1, h2, h3 {
+      font-family: Manrope, sans-serif;
+      margin: 0 0 0.8rem;
+      line-height: 1.08;
+    }
+
+    h1 { font-size: clamp(2rem, 5vw, 4.5rem); max-width: 13ch; }
+    h2 { font-size: clamp(1.7rem, 3vw, 2.8rem); }
+    h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.4rem;
+      align-items: end;
+    }
+
+    .hero p { max-width: 60ch; color: #383632; }
+
+    .btn-row {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.1rem;
+      border: 1px solid var(--ink);
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn.primary {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+
+    .btn.primary:hover,
+    .btn.primary:focus-visible {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .btn.ghost:hover,
+    .btn.ghost:focus-visible {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .key-note {
+      border: 1px solid var(--line);
+      padding: 1.2rem;
+      background: var(--panel);
+      font-size: 0.95rem;
+    }
+
+    main section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .planning {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .planning article,
+    .service,
+    .case,
+    .metric,
+    .phase {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 1.15rem;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .service p,
+    .case p,
+    .phase p { color: #4f4a43; font-size: 0.95rem; }
+
+    .case-grid,
+    .metrics,
+    .process {
+      margin-top: 1.25rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .case-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .process { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .metric strong {
+      display: block;
+      font-size: 1.8rem;
+      font-family: Manrope, sans-serif;
+      margin-bottom: 0.2rem;
+    }
+
+    .cta {
+      background: var(--charcoal);
+      color: #f3f1ec;
+      border-bottom: 0;
+    }
+
+    .cta .container {
+      padding: 3.7rem 0;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .cta p { color: #d6d1c8; }
+
+    footer {
+      padding: 1.8rem 0 2.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: #efebe4;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .planning,
+      .services,
+      .case-grid,
+      .metrics,
+      .process,
+      .cta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu { display: none; }
+    }
+  </style>
 </head>
-<body class="bg-white text-brand-dark font-sans antialiased selection:bg-brand-accent selection:text-white"
-      x-data="{ mobileMenuOpen: false }">
+<body>
+  <header class="nav">
+    <div class="container nav-wrap">
+      <a href="#top" class="brand">PAT RYAN / STUDIO</a>
+      <nav class="menu" aria-label="Primary navigation">
+        <a href="#concept">Concept</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <div class="w-3 h-8 bg-brand-accent"></div>
-                    <span class="font-display font-bold text-xl tracking-tight">PAT RYAN THINGS</span>
-                </div>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#" class="text-sm font-mono text-brand-muted hover:text-brand-accent transition-colors">npm i portfolio</a>
-                </div>
-            </div>
+  <section id="top" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Built environment storytelling + delivery</span>
+        <h1>Shaping physical spaces and digital experiences with strategic clarity.</h1>
+        <p>
+          This concept site is intentionally inspired by the disciplined, editorial feeling of Kilograph-like agency websites: clean typography,
+          cinematic pacing, restrained colors, and project-first storytelling. It is not a copy — it is your own identity framework tuned for
+          client trust and portfolio conversion.
+        </p>
+        <div class="btn-row">
+          <a class="btn primary" href="#portfolio">View Featured Work</a>
+          <a class="btn ghost" href="ai_studio_code.html">Detailed Studio Profile</a>
         </div>
-    </nav>
+      </div>
+      <aside class="key-note">
+        <strong>Positioning statement</strong>
+        <p>
+          I help owners, developers, and design teams align concept, branding, technical execution, and budget discipline from ideation through delivery.
+        </p>
+      </aside>
+    </div>
+  </section>
 
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <!-- Abstract Background Element -->
-        <div class="absolute top-0 left-0 -ml-20 -mt-20 w-[600px] h-[600px] bg-gray-100 rounded-full blur-3xl opacity-50 z-0"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div class="max-w-4xl mx-auto reveal active">
-                <h1 class="font-display text-5xl md:text-7xl font-bold leading-tight mb-8">
-                    A Creative Engineer For <br/>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-orange-400">Building Real Things</span>.
-                </h1>
-                <p class="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
-                    Building automation applications for the factories and fabrication studios of the New Industrial Revolution.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#contact" class="px-8 py-4 bg-brand-accent text-white font-semibold rounded hover:bg-brand-accentHover transition-all shadow-lg shadow-orange-200 text-center">
-                        Get in Touch
-                    </a>
-                    <a href="ai_studio_code.html" class="px-8 py-4 bg-white border border-gray-300 text-brand-dark font-semibold rounded hover:bg-gray-50 transition-all text-center">
-                        View Work
-                    </a>
-                </div>
-            </div>
+  <main>
+    <section id="concept">
+      <div class="container">
+        <span class="eyebrow">Design concept + rollout plan</span>
+        <h2>Website architecture for patryan.com</h2>
+        <p>
+          The design system is organized around a minimal grid, bold headlines, and quiet motion so your work remains the hero.
+          This launch version can be deployed as static HTML immediately, then expanded into a CMS-backed portfolio in phase two.
+        </p>
+        <div class="planning">
+          <article>
+            <h3>01 / Visual Direction</h3>
+            <p>Neutral palette, warm industrial accent, generous whitespace, and large-format typography for an architectural editorial tone.</p>
+          </article>
+          <article>
+            <h3>02 / Content Structure</h3>
+            <p>Landing narrative, capability matrix, project snapshots, measurable outcomes, and clear contact CTA for marketing conversion.</p>
+          </article>
+          <article>
+            <h3>03 / Technical Launch</h3>
+            <p>Static first for speed and reliability; future-ready for Webflow, Astro, or Next.js migration when your portfolio volume scales.</p>
+          </article>
         </div>
+      </div>
     </section>
 
-    <!-- Content Grid -->
-    <section class="py-24 bg-brand-light relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                
-                <!-- Experience Column -->
-                <div class="reveal">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold uppercase tracking-wider mb-8 text-brand-accent">
-                        <span class="w-2 h-2 rounded-full bg-brand-accent"></span>
-                        Experience
-                    </div>
-                    
-                    <div class="space-y-6">
-                        <!-- Card 1 -->
-                        <div class="bg-white p-8 rounded-xl border border-gray-200 hover:border-brand-accent hover:shadow-xl transition-all duration-300 group">
-                            <h3 class="font-display text-xl font-bold mb-1">Creative Director</h3>
-                            <p class="text-sm font-semibold text-brand-accent mb-4">Pat Ryan Things</p>
-                            <p class="text-gray-600 text-sm leading-relaxed">Current Role.</p>
-                        </div>
-
-                        <!-- Card 2 -->
-                        <div class="bg-white p-8 rounded-xl border border-gray-200 hover:border-brand-accent hover:shadow-xl transition-all duration-300 group">
-                            <h3 class="font-display text-xl font-bold mb-1">Lead Design Engineer</h3>
-                            <p class="text-sm font-semibold text-brand-accent mb-4">Industrial Luxury</p>
-                            <p class="text-gray-600 text-sm leading-relaxed">Previous Role.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Skills Column -->
-                <div class="reveal delay-100">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold uppercase tracking-wider mb-8 text-brand-accent">
-                        <span class="w-2 h-2 rounded-full bg-brand-accent"></span>
-                        Capabilities
-                    </div>
-
-                    <div class="bg-white p-8 rounded-xl border border-gray-200 hover:border-brand-accent hover:shadow-xl transition-all duration-300 h-full">
-                        <h3 class="font-display text-2xl font-bold mb-6">Core Skills</h3>
-                        <ul class="space-y-4 mb-8">
-                            <li class="flex items-start">
-                                <span class="text-brand-accent mr-3">➜</span>
-                                <span class="text-gray-700">Designing purpose-built platforms for physical AI</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-brand-accent mr-3">➜</span>
-                                <span class="text-gray-700">Creating comprehensive video analytics</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-brand-accent mr-3">➜</span>
-                                <span class="text-gray-700">AI-enhanced, digital twin predictive failure prevention</span>
-                            </li>
-                        </ul>
-                        <p class="text-gray-600 leading-relaxed border-t border-gray-100 pt-6">
-                            I specialize in building durable, generative world foundation models (WFMs) for accelerating the adoption of physical AI in the manufacturing industry.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
+    <section id="services">
+      <div class="container">
+        <span class="eyebrow">Capabilities</span>
+        <h2>Integrated service stack</h2>
+        <p>Each offer below maps directly to the skills you listed and is framed as a client-facing service with clear outcomes.</p>
+        <div class="services">
+          <article class="service"><h3>Industrial Design</h3><p>Product and spatial system development translating idea to manufacturable reality.</p></article>
+          <article class="service"><h3>Site Development</h3><p>Design and build of marketing websites, portfolio systems, and digital touchpoints.</p></article>
+          <article class="service"><h3>Concept Branding + Rendering</h3><p>Early-stage visual narratives, 3D scenes, and pitch materials that secure buy-in.</p></article>
+          <article class="service"><h3>Interior Identity + Branding</h3><p>Environmental graphics, signage language, and experiential brand alignment.</p></article>
+          <article class="service"><h3>Aesthetic Infrastructure</h3><p>Frameworks for materiality, lighting, and visual consistency across property portfolios.</p></article>
+          <article class="service"><h3>Digital Twins</h3><p>Simulation-ready asset creation and operational storytelling for performance planning.</p></article>
+          <article class="service"><h3>Owner Representation</h3><p>Strategic oversight connecting owner intent with consultant and contractor execution.</p></article>
+          <article class="service"><h3>FF&E Specification + Budgeting</h3><p>Specification control, value alignment, and financial clarity from concept to procurement.</p></article>
         </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact" class="bg-brand-dark text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="font-display text-3xl font-bold mb-6">Let's Build Something Real.</h2>
-            <p class="text-gray-400 max-w-md mx-auto leading-relaxed mb-8">
-                Open for collaborations on Physical AI and Industrial Automation projects.
-            </p>
-            <div class="mt-12 text-xs text-gray-500">
-                &copy; 2025 Pat Ryan Things. All rights reserved.
-            </div>
+    <section id="portfolio">
+      <div class="container">
+        <span class="eyebrow">Portfolio framing</span>
+        <h2>Suggested case study lineup</h2>
+        <div class="case-grid">
+          <article class="case">
+            <h3>Adaptive Hospitality Concept</h3>
+            <p>Brand narrative, interior identity, and digital render package for a mixed-use destination proposal.</p>
+          </article>
+          <article class="case">
+            <h3>Industrial Showroom Twin</h3>
+            <p>Digital twin workflow connecting visualization, operations planning, and stakeholder review cycles.</p>
+          </article>
+          <article class="case">
+            <h3>Owner-Side FF&E Governance</h3>
+            <p>Specification matrix and budget controls to reduce procurement risk on a multi-space project.</p>
+          </article>
         </div>
-    </footer>
+        <div class="metrics" aria-label="Performance metrics examples">
+          <article class="metric"><strong>28%</strong>Faster design approval cycles through visual alignment assets.</article>
+          <article class="metric"><strong>$420K</strong>Potential cost avoidance through FF&E scope calibration.</article>
+          <article class="metric"><strong>3x</strong>Higher stakeholder clarity with phased render storytelling.</article>
+          <article class="metric"><strong>6 weeks</strong>From discovery to launch-ready marketing website.</article>
+        </div>
+      </div>
+    </section>
 
-    <!-- Scroll Reveal Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const reveals = document.querySelectorAll('.reveal');
+    <section id="process">
+      <div class="container">
+        <span class="eyebrow">Engagement model</span>
+        <h2>How projects move from vision to execution</h2>
+        <div class="process">
+          <article class="phase"><h3>Discover</h3><p>Audit brand, space, audience, and commercial goals.</p></article>
+          <article class="phase"><h3>Frame</h3><p>Define concept narratives, scope boundaries, and success metrics.</p></article>
+          <article class="phase"><h3>Visualize</h3><p>Develop render packages, identity components, and digital tools.</p></article>
+          <article class="phase"><h3>Deliver</h3><p>Guide implementation, budget management, and portfolio publishing.</p></article>
+        </div>
+      </div>
+    </section>
 
-            const revealOnScroll = () => {
-                const windowHeight = window.innerHeight;
-                const elementVisible = 150;
+    <section id="contact" class="cta">
+      <div class="container cta-grid">
+        <div>
+          <span class="eyebrow" style="color:#b8b1a5;">Launch-ready next step</span>
+          <h2>Use this as your patryan.com v1 and start publishing projects immediately.</h2>
+          <p>
+            For deployment: point your DNS to static hosting (Netlify, Vercel, or Cloudflare Pages), publish this build,
+            and then iterate each case study monthly with new visuals and outcomes.
+          </p>
+        </div>
+        <div>
+          <a class="btn primary" href="mailto:hello@patryan.com">Start a project conversation</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-                reveals.forEach((reveal) => {
-                    const elementTop = reveal.getBoundingClientRect().top;
-                    if (elementTop < windowHeight - elementVisible) {
-                        reveal.classList.add('active');
-                    }
-                });
-            };
-
-            window.addEventListener('scroll', revealOnScroll);
-            revealOnScroll(); // Trigger once on load
-        });
-    </script>
+  <footer>
+    <div class="container">© 2026 Pat Ryan Studio. Strategic design, branding, and owner-side delivery advisory.</div>
+  </footer>
 </body>
 </html>
